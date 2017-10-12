@@ -1,4 +1,4 @@
-{% set version = '0.2.2' %}
+{% set version = '0.3.1' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,43 +12,87 @@ source:
   url:
     - https://cran.r-project.org/src/contrib/threejs_{{ version }}.tar.gz
     - https://cran.r-project.org/src/contrib/Archive/threejs/threejs_{{ version }}.tar.gz
-  sha256: 41fe949490fbe0f71e39b0a144791da427bd7361d027579cb4a002ed53520cc5
+  sha256: 71750b741672a435ecf749b69c72f0681aa8bb795e317f4e3056d5e33f6d79e8
+
+
+  # patches:
+   # List any patch files here
+   # - fix.patch
 
 build:
+  # If this is a new build for the same version, increment the build number.
   number: 0
-  skip: true  # [win32]
 
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
+# Suggests: maps
 requirements:
   build:
     - r-base
-    - r-matrix
     - r-base64enc
+    - r-crosstalk
     - r-htmlwidgets >=0.3.2
-    - r-jsonlite
+    - r-igraph >=1.0.0
+
   run:
     - r-base
-    - r-matrix
     - r-base64enc
+    - r-crosstalk
     - r-htmlwidgets >=0.3.2
-    - r-jsonlite
+    - r-igraph >=1.0.0
 
 test:
   commands:
-    - $R -e "library('threejs')"  # [not win]
+    # You can put additional test commands to be run here.
+    - $R -e "library('threejs')"           # [not win]
     - "\"%R%\" -e \"library('threejs')\""  # [win]
 
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
+
 about:
-  home: http://bwlewis.github.io/rthreejs
-  license: MIT
+  home: https://bwlewis.github.io/rthreejs
+  license: MIT + file LICENSE
   summary: Create interactive 3D scatter plots, network plots, and globes using the 'three.js'
-    visualization library ("http://threejs.org").
+    visualization library (<https://threejs.org>).
   license_family: MIT
 
 extra:
   recipe-maintainers:
     - johanneskoester
     - bgruening
+    - mingwandroid
+
+# The original CRAN metadata for this package was:
+
+# Package: threejs
+# Type: Package
+# Title: Interactive 3D Scatter Plots, Networks and Globes
+# Description: Create interactive 3D scatter plots, network plots, and globes using the 'three.js' visualization library (<https://threejs.org>).
+# Version: 0.3.1
+# Date: 2017-08-11
+# Authors@R: c( person("B. W.", "Lewis", role=c("aut","cre"), email="blewis@illposed.net"), person(given="Three.js authors", role="cph", comment="three.js JavaScript library"), person("Alexey", "Stukalov", role=("ctb"), email="astukalov@gmail.com"), person("Yihui","Xie", role=("ctb"), email="xie@yihui.name"), person("Andreas", "Briese", role=("ctb"), email="ab@edutoolbox.de"), person("B.",  "Thieurmel", role=("ctb"), email="bthieurmel@gmail.com") )
+# URL: https://bwlewis.github.io/rthreejs
+# BugReports: https://github.com/bwlewis/rthreejs/issues
+# License: MIT + file LICENSE
+# Depends: R (>= 3.0.0), igraph (>= 1.0.0)
+# Imports: htmlwidgets (>= 0.3.2), base64enc, crosstalk, methods, stats
+# Suggests: maps
+# Enhances: knitr, shiny
+# RoxygenNote: 5.0.1
+# NeedsCompilation: no
+# Packaged: 2017-08-12 13:04:06 UTC; blewis
+# Author: B. W. Lewis [aut, cre], Three.js authors [cph] (three.js JavaScript library), Alexey Stukalov [ctb], Yihui Xie [ctb], Andreas Briese [ctb], B. Thieurmel [ctb]
+# Maintainer: B. W. Lewis <blewis@illposed.net>
+# Repository: CRAN
+# Date/Publication: 2017-08-13 05:42:40 UTC
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
