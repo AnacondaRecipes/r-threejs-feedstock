@@ -10,8 +10,8 @@ package:
 source:
   fn: threejs_{{ version }}.tar.gz
   url:
-    - https://cran.r-project.org/src/contrib/threejs_{{ version }}.tar.gz
-    - https://cran.r-project.org/src/contrib/Archive/threejs/threejs_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/threejs_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/threejs/threejs_{{ version }}.tar.gz
   sha256: 71750b741672a435ecf749b69c72f0681aa8bb795e317f4e3056d5e33f6d79e8
 
 
